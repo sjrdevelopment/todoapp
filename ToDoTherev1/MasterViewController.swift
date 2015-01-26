@@ -56,7 +56,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 if let textField = titleTextField {
                     if(countElements(textField.text) > 0) {
                         
-                        println(textField.text)
                         self.saveNewString(textField.text)
                     } else {
                         self.cancelNewItem()
@@ -79,19 +78,11 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     }
     
     func saveNewString(dataString: String) {
-        println("the string is: \(dataString)")
-    
-        
-        // exsting vars
+
         let context = self.fetchedResultsController.managedObjectContext
         let entity = self.fetchedResultsController.fetchRequest.entity!
         let newManagedObject = NSEntityDescription.insertNewObjectForEntityForName(entity.name!, inManagedObjectContext: context) as NSManagedObject
-        // end
-        
-        println(newManagedObject.objectID)
-
-       
-        
+   
         
         // If appropriate, configure the new managed object.
         // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
@@ -101,9 +92,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         newManagedObject.setValue(dataString, forKey: "listName")
        
         
-    
-        
-        
         // Save the context.
         var error: NSError? = nil
         if !context.save(&error) {
@@ -112,7 +100,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             //println("Unresolved error \(error), \(error.userInfo)")
             abort()
         }
-        // end
+      
     }
     
     
@@ -165,9 +153,16 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
+            let rowID = self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject
+            
+            println("OBJECT ID TO DELETE: \(rowID.objectID.description)")
+            // delete the list items for this list:
+            removeIndexFromDB(rowID.objectID.description)
+            
             let context = self.fetchedResultsController.managedObjectContext
             context.deleteObject(self.fetchedResultsController.objectAtIndexPath(indexPath) as NSManagedObject)
-                
+            
+           
             var error: NSError? = nil
             if !context.save(&error) {
                 // Replace this implementation with code to handle the error appropriately.
@@ -185,12 +180,12 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         var theTitle = object.valueForKey("listName")!.description
         var theDate = object.valueForKey("timestamp")!.description
         
-        cell.textLabel!.text = theTitle
-        cell.detailTextLabel?.text = theDate
-    
 
-    }
+        cell.textLabel!.text = theTitle
     
+        cell.detailTextLabel?.text = theDate
+    }
+
     // MARK: - Fetched results controller
 
     var fetchedResultsController: NSFetchedResultsController {
@@ -229,7 +224,8 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     	}
         
         return _fetchedResultsController!
-    }    
+    }
+
     var _fetchedResultsController: NSFetchedResultsController? = nil
 
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
@@ -253,6 +249,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                 tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
                 tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                println(indexPath)
             case .Update:
                 self.configureCell(tableView.cellForRowAtIndexPath(indexPath!)!, atIndexPath: indexPath!)
             case .Move:
@@ -265,6 +262,13 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         self.tableView.endUpdates()
+    }
+    
+    
+    // remove list items for deleted list
+    func removeIndexFromDB(listID:String) {
+        
+        // should remove list items with matching listID
     }
 
     /*

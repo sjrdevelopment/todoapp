@@ -5,7 +5,13 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <userInfo/>
     </entity>
+    <entity name="ListItems" syncable="YES">
+        <attribute name="listID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Event" positionX="261" positionY="189" width="128" height="75"/>
+        <element name="Event" positionX="261" positionY="189" width="128" height="73"/>
+        <element name="ListItems" positionX="261" positionY="207" width="128" height="88"/>
     </elements>
 </model>

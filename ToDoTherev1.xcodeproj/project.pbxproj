@@ -347,6 +347,7 @@
 				INFOPLIST_FILE = ToDoTherev1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -357,6 +358,7 @@
 				INFOPLIST_FILE = ToDoTherev1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -413,6 +415,7 @@
 				37341DB41A72992C006867E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		37341DB51A72992C006867E6 /* Build configuration list for PBXNativeTarget "ToDoTherev1Tests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +424,7 @@
 				37341DB71A72992C006867E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
